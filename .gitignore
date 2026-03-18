@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+.pytest_cache/
+.mypy_cache/
+
+# Environment
+.env
+.venv/
+venv/
+
+# AI model artifacts (ignore when large)
+*.pt
+*.onnx
+
+# Node / Expo
+node_modules/
+.expo/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log
