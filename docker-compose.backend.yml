@@ -1,0 +1,57 @@
+services:
+  # ──────────────────────────────────────────────────────
+  # Redis
+  # ──────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: skinaid_redis
+    restart: always
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-}
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-}
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - skinaid_backend_net
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -a $$REDIS_PASSWORD ping | grep PONG"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ──────────────────────────────────────────────────────
+  # Backend Service
+  # ──────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: skinaid-backend:latest
+    container_name: skinaid_backend
+    restart: always
+    env_file:
+      - ./backend/.env
+    # Mở port 8000 ra ngoài host để ALB có thể kết nối vào
+    ports:
+      - "8000:8000"
+    volumes:
+      - backend_uploads:/app/uploads
+      - backend_rag_docs:/app/rag_docs
+      - backend_logs:/app/logs
+    networks:
+      - skinaid_backend_net
+    depends_on:
+      redis:
+        condition: service_healthy
+
+networks:
+  skinaid_backend_net:
+    driver: bridge
+
+volumes:
+  redis_data:
+  backend_rag_docs:
+  backend_uploads:
+  backend_logs:
