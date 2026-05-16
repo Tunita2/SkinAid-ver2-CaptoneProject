@@ -1,5 +1,5 @@
 import os
-import cv2
+import time
 import logging
 import numpy as np
 from typing import Dict, Any
@@ -108,12 +108,12 @@ class WoundAIService:
 
     async def analyze_wound(self, image_path: str) -> Dict[str, Any]:
         try:
-            start_time = cv2.getTickCount()
+            start_time = time.perf_counter()
 
             ai_result = await self.call_ai_service(image_path)
 
             if not ai_result.get("success", False):
-                processing_time = (cv2.getTickCount() - start_time) / cv2.getTickFrequency()
+                processing_time = time.perf_counter() - start_time
                 return {
                     "success": False,
                     "error": ai_result.get("error", "AI service failed"),
