@@ -51,8 +51,8 @@ resource "aws_security_group" "ai_sg" {
   vpc_id      = aws_vpc.main.id
 
   ingress {
-    from_port       = 5000
-    to_port         = 5000
+    from_port       = 8001
+    to_port         = 8001
     protocol        = "tcp"
     security_groups = [aws_security_group.backend_sg.id]
   }
