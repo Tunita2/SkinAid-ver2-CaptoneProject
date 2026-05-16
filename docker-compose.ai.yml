@@ -37,7 +37,7 @@ services:
       - "8001:8001"
       - "5000:5000"
     volumes:
-      - ai_model_weights:/app/models
+      - ./ai_ml/models:/app/models
     networks:
       - skinaid_ai_net
 
