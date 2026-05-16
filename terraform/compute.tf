@@ -17,6 +17,11 @@ resource "aws_instance" "backend_az1" {
   vpc_security_group_ids = [aws_security_group.backend_sg.id]
 
   tags = { Name = "Backend-EC2-AZ1" }
+
+  root_block_device {
+    volume_size = 30
+    volume_type = "gp3"
+  }
 }
 
 resource "aws_instance" "backend_az2" {
@@ -27,6 +32,11 @@ resource "aws_instance" "backend_az2" {
   vpc_security_group_ids = [aws_security_group.backend_sg.id]
 
   tags = { Name = "Backend-EC2-AZ2" }
+
+  root_block_device {
+    volume_size = 30
+    volume_type = "gp3"
+  }
 }
 
 resource "aws_lb_target_group_attachment" "backend_az1" {
@@ -50,6 +60,11 @@ resource "aws_instance" "ai_service_az1" {
   vpc_security_group_ids = [aws_security_group.ai_sg.id]
 
   tags = { Name = "AI-Service-EC2-AZ1" }
+
+  root_block_device {
+    volume_size = 70
+    volume_type = "gp3"
+  }
 }
 
 resource "aws_instance" "ai_service_az2" {
@@ -60,4 +75,9 @@ resource "aws_instance" "ai_service_az2" {
   vpc_security_group_ids = [aws_security_group.ai_sg.id]
 
   tags = { Name = "AI-Service-EC2-AZ2" }
+
+  root_block_device {
+    volume_size = 70
+    volume_type = "gp3"
+  }
 }

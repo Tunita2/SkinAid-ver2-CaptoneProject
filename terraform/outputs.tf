@@ -27,3 +27,13 @@ output "image_store_s3_bucket" {
   description = "Tên Bucket S3 lưu trữ hình ảnh da"
   value       = aws_s3_bucket.image_store.id
 }
+
+output "ai_service_az1_private_ip" {
+  description = "Private IP của AI-Service-EC2-AZ1"
+  value       = aws_instance.ai_service_az1.private_ip
+}
+
+output "ai_service_az2_private_ip" {
+  description = "Private IP của AI-Service-EC2-AZ2"
+  value       = aws_instance.ai_service_az2.private_ip
+}
